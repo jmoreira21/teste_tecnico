@@ -2,8 +2,12 @@
 João Pedro Medeiros
 
 Parte 1:
+
+
   Questão 1:
-  Primeiramente, uma lista chamada "numeros" é criada com os valores de 1 a 6. A seguir, uma lista vazia "resultados" que irá armazenar o resultado. O for percorre cada   valor "n" na lista "numeros" e, se o número n for par ( resto da divisão de n por 2 for 0), é adicionado o dobro de n na lista "resultados". O print final sera           [4,8,12]
+  Primeiramente, uma lista chamada "numeros" é criada com os valores de 1 a 6. A seguir, uma lista vazia "resultados" que irá armazenar o resultado. O for percorre cada   valor "n" na lista "numeros" e, se o número n for par ( resto da divisão de n por 2 for 0), é adicionado o dobro de n na lista "resultados". O print final sera        [4,8,12]
+
+  
   Questão 2:
   A função esta correta. Ela soma dois numeros, sendo que "b" é um parâmetro com valor padrão de 10. Ela retornará, respectivamente, 15, 8, 6.
 
