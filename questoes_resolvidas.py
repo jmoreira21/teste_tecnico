@@ -1,3 +1,35 @@
+"""
+
+Parte 1:
+
+Questão 1: Primeiramente, uma lista chamada "numeros" é criada com os valores de 1 a 6. A seguir, uma lista vazia "resultados" que irá armazenar o resultado. O for percorre cada valor "n" na lista "numeros" e, se o número n for par ( resto da divisão de n por 2 for 0), é adicionado o dobro de n na lista "resultados". O print final sera [4,8,12]
+
+Questão 2: A função esta correta. Ela soma dois numeros, sendo que "b" é um parâmetro com valor padrão de 10. Ela retornará, respectivamente, 15, 8, 6.
+
+Parte 2: a) SELECT DISTINCT c.nome 
+            FROM clientes c 
+            INNER JOIN pedidos p ON c.id = p.cliente_id 
+            WHERE c.ativo = TRUE AND p.status = 'pago' 
+            ORDER BY c.nome;
+
+        b) SELECT c.cidade, SUM(p.valor) AS total_gasto 
+            FROM clientes c 
+            INNER JOIN pedidos p ON c.id = p.cliente_id 
+            WHERE p.status = 'pago' 
+            GROUP BY c.cidade 
+            ORDER BY total_gasto DESC;
+        
+        c) SELECT c.id, c.nome 
+           FROM clientes c 
+           LEFT JOIN pedidos p ON c.id = p.cliente_id 
+           WHERE p.id IS NULL 
+           ORDER BY c.nome;
+
+"""
+
+
+
+
 
 import requests
 from datetime import datetime
@@ -9,6 +41,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 GEOCODING_API = "https://geocoding-api.open-meteo.com/v1/search"
 FORECAST_API = "https://api.open-meteo.com/v1/forecast"
 
+##Funcao que ira obter as coordenadas da cidade escolhida, retornando ela
 def obter_coordenadas(cidade):
 
     try:
@@ -34,7 +67,8 @@ def obter_coordenadas(cidade):
             "estado": resultado.get("admin1", ""),
             "pais": resultado.get("country", "")
         }
-    
+
+    ##Tratando excecoes
     except requests.exceptions.ConnectionError:
         print(f"Erro de conexão: Verifique sua conexão com a internet")
         return None
@@ -45,6 +79,7 @@ def obter_coordenadas(cidade):
         print(f"Erro ao processar: {str(e)[:100]}")
         return None
 
+## Pega a previsao da cidade escolhida atraves da latitude e longitude (coordenadas) dos proximos 7 dias 
 def obter_previsao(latitude, longitude):
 
     try:
@@ -59,7 +94,8 @@ def obter_previsao(latitude, longitude):
         response.raise_for_status()
         
         return response.json()
-    
+
+    ##Tratando excecoes
     except requests.exceptions.ConnectionError:
         print(f"Erro de conexão: Verifique sua conexão com a internet")
         return None
@@ -70,6 +106,7 @@ def obter_previsao(latitude, longitude):
         print(f"Erro ao processar: {str(e)[:100]}")
         return None
 
+##Calculo da media, da temperatura max e min da cidade 
 def calcular_estatisticas(temps_max, temps_min):
     if not temps_max or not temps_min:
         return None, None, None
@@ -82,6 +119,7 @@ def calcular_estatisticas(temps_max, temps_min):
     temp_min_periodo = min(temps_min)
     
     return media_geral, temp_max_periodo, temp_min_periodo
+
 
 def exibir_previsao(cidade_info, previsao_data):
 
@@ -110,6 +148,7 @@ def exibir_previsao(cidade_info, previsao_data):
     
     print("=" * 50)
 
+##Main, usando um while true para que fique rodando ate o usuario desejar sair, semore dando a opcao do usuario continuar pesquisando mais uma cidde
 def main():
     
     while True:
